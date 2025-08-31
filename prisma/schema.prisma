@@ -15,16 +15,17 @@ datasource db {
 
 model School {
   id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255) // school name
-  address    String   @db.VarChar(500) // full address
-  city       String   @db.VarChar(100)
-  state      String   @db.VarChar(100)
-  contact    String   @db.VarChar(20)  // phone number
-  image      String   @db.VarChar(255) // file path or URL
+  name       String   @db.Text
+  address    String   @db.Text
+  city       String   @db.Text
+  state      String   @db.Text
+  contact    String   @db.VarChar(15)  // phone number
+  image      String   @db.Text         // file path
   email_id   String   @unique @db.VarChar(255)
 
-  // Optional metadata
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@map("schools")
 }
 

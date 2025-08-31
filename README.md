@@ -1,36 +1,172 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# School Connect 🏫
 
-## Getting Started
+A modern web application for managing and discovering schools, built with Next.js and MySQL. Users can add new schools to the directory and browse through existing schools with advanced search and filtering capabilities.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 📝 Add School Page
+- **React Hook Form** with comprehensive validation
+- **Image Upload** with storage in `schoolImages` folder
+- **Form Validation**: Email validation, 10-digit phone number validation, required fields
+- **Responsive Design** that works on mobile and desktop
+- **Success/Error Feedback** with automatic redirection
+
+### 🔍 Show Schools Page
+- **E-commerce Style Layout** displaying schools as product cards
+- **Advanced Search** by school name, city, address
+- **Filter Options** by city and state with dropdown menus
+- **Pagination** for better performance and navigation
+- **Active Filters Display** with individual removal options
+- **Image Hover Effects** with zoom animation
+- **Responsive Grid Layout** adapting to all screen sizes
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, React, TypeScript
+- **Backend**: Next.js API Routes
+- **Database**: MySQL with Prisma ORM
+- **Styling**: Tailwind CSS
+- **Form Handling**: React Hook Form
+- **UI Components**: Custom components with Radix UI
+- **Image Handling**: Next.js Image optimization
+
+## 📋 Database Schema
+
+```sql
+CREATE TABLE schools (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name TEXT NOT NULL,
+  address TEXT NOT NULL,
+  city TEXT NOT NULL,
+  state TEXT NOT NULL,
+  contact VARCHAR(15) NOT NULL,
+  email_id VARCHAR(255) UNIQUE NOT NULL,
+  image TEXT NOT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+ 
+- MySQL database
+- npm or yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd school-connect
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Set up environment variables**
+   Create a `.env` file in the root directory:
+   ```env
+   DATABASE_URL="mysql://username:password@localhost:3306/school_connect"
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Set up the database**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-## Deploy on Vercel
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+```
+school-connect/
+├── src/
+│   ├── app/
+│   │   ├── addSchool/          # Add school page
+│   │   ├── showSchools/        # Display schools page
+│   │   ├── api/schools/        # API routes
+│   │   └── page.tsx            # Home page
+│   ├── components/
+│   │   ├── ui/                 # Reusable UI components
+│   │   ├── school-card.tsx     # School display card
+│   │   ├── school-search.tsx   # Search and filter component
+│   │   └── pagination.tsx      # Pagination component
+│   └── lib/
+│       ├── prisma.ts           # Database connection
+│       └── utils.ts            # Utility functions
+├── prisma/
+│   └── schema.prisma           # Database schema
+├── public/
+│   └── schoolImages/           # Uploaded school images
+└── README.md
+```
+
+## 🎯 API Endpoints
+
+### POST /api/schools
+Add a new school to the database
+- **Body**: FormData with school details and image file
+- **Response**: Created school object
+
+### GET /api/schools
+Retrieve schools with optional filtering and pagination
+- **Query Parameters**:
+  - `search`: Search term for name/city/address
+  - `city`: Filter by city
+  - `state`: Filter by state
+  - `page`: Page number (default: 1)
+  - `limit`: Items per page (default: 12)
+
+## 📱 Responsive Design
+
+The application is fully responsive and optimized for:
+- **Mobile devices** (320px+)
+- **Tablets** (768px+)
+- **Desktop** (1024px+)
+- **Large screens** (1280px+)
+
+## 🔧 Key Features Implementation
+
+### Form Validation
+- Email format validation using regex
+- Phone number validation (exactly 10 digits)
+- Required field validation
+- Real-time error display
+
+### Image Handling
+- File upload with validation
+- Automatic image storage in `public/schoolImages/`
+- Fallback placeholders for missing images
+- Image optimization with Next.js Image component
+
+### Search & Filtering
+- Debounced search input (500ms delay)
+- Multiple filter options (city, state)
+- Active filter display with removal options
+- URL parameter synchronization
+
+### Performance Optimizations
+- Pagination to limit data loading
+- Image lazy loading
+- Debounced search queries
+- Efficient database queries with Prisma
+
+## 🚀 Deployment
+
+
+Make sure to:
+1. Set up your production database
+2. Configure environment variables
+3. Run database migrations
+4. Build the application
